@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Presentes | Letícia & Igor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #d4b996;
+            --secondary: #8c6d46;
+            --accent: #a2836e;
+            --light: #f8f3ed;
+            --dark: #3c2f2f;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(rgba(60, 47, 47, 0.7), rgba(60, 47, 47, 0.7)), url('../img/flowers.png') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .couple-names {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .wedding-date {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Botão Voltar */
+        .back-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 1rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-button:hover {
+            background: var(--light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        
+        /* Main Content */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            color: var(--secondary);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        /* Categorias */
+        .gift-category {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        /* Lista de Presentes */
+        .gift-list {
+            background-color: white;
+        }
+        
+        .gift-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gift-item {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .gift-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .gift-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gift-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gift-image:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gift-info {
+            padding: 1.5rem;
+        }
+        
+        .gift-name {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            min-height: 60px;
+        }
+        
+        .gift-price {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        
+        .gift-button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .gift-button:hover {
+            background: var(--secondary);
+        }
+        
+        .pix-modal-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .pix-modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            animation: fadeIn 0.3s ease-out;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .modal-title {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .modal-instruction {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .bank-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .bank-button {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .bank-button:hover {
+            background: var(--light);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .bank-button img {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .copy-info {
+            padding: 15px;
+            background: #eef7f2;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .couple-names {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .gift-category {
+                font-size: 1.5rem;
+            }
+            
+            .bank-options {
+                grid-template-columns: 1fr;
+            }
+            .modal-title,
+            .modal-instruction,
+            .copy-info,
+            .bank-options,
+            .bank-button {
+                font-size: 1rem;
+            }
+            .close-modal {
+                font-size: 2rem;        
+                top: 10px; 
+                right: 10px;  
+            }    
+            .bank-options {        
+                grid-template-columns: 1fr 1fr;        
+                gap: 10px;    
+            }
+            .bank-button img {
+                width: 32px;
+                height: 32px;
+            }      
+        }
+        
+        @media (max-width: 480px) {
+            .couple-names {
+                font-size: 2.2rem;
+            }
+            
+            .wedding-date {
+                font-size: 1rem;
+            }
+            
+            .gift-category {
+                font-size: 1.3rem;
+            }
+            
+            .gift-container {
+                grid-template-columns: 1fr;
+            }
+            .pix-modal-content {
+                padding: 0.5rem;
+                font-size: 0.92rem;
+            }
+            .bank-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .gift-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 1;
+        }
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            width: 100%;
+        }
+        
+        #gift-search {
+            width: 100%;
+            padding: 15px 20px 15px 55px;
+            font-size: 16px;
+            border-radius: 50px;
+            border: 2px solid var(--primary);
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            outline: none;
+            color: var(--dark);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        #gift-search:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(140, 109, 70, 0.2);
+        }
+        
+        #gift-search::placeholder {
+            color: #a2836e;
+            font-style: italic;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-size: 18px;
+            pointer-events: none;
+        }
+        .instructions {
+            background: #f0f8ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .instructions h4 {
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+        }
+        
+        .instructions ol {
+            padding-left: 1.5rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+        /* ============================================= */
+/* ESTILO PARA PRESENTES JÁ ENTREGUES */
+/* ============================================= */
+
+.gift-given {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #f8e0b0;
+    box-shadow: 0 5px 25px rgba(248, 224, 176, 0.4);
+    transform: scale(0.98);
+    transition: all 0.4s ease;
+}
+
+/* Selo festivo "Presenteado" */
+.gift-given::before {
+    content: "Presenteado";
+    position: absolute;
+    top: 20px;
+    right: -35px;
+    width: 160px;
+    padding: 10px 0;
+    background: linear-gradient(45deg, #d4af37, #f8e0b0);
+    color: #8c6d46;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-align: center;
+    letter-spacing: 1px;
+    transform: rotate(45deg);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    z-index: 10;
+    animation: stamp-appear 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Overlay dourado na imagem */
+.gift-given .gift-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(248, 224, 176, 0.25));
+    z-index: 1;
+    animation: golden-glow 3s infinite alternate;
+}
+
+/* Efeito de brilho pulsante */
+@keyframes golden-glow {
+    0% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+}
+
+/* Animação de entrada do selo */
+@keyframes stamp-appear {
+    0% { 
+        transform: rotate(45deg) scale(0.1); 
+        opacity: 0; 
+    }
+    80% { 
+        transform: rotate(45deg) scale(1.1); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: rotate(45deg) scale(1); 
+    }
+}
+
+/* Confetes decorativos */
+.gift-given .gift-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="10" cy="15" r="3" fill="%23d4af37"/><circle cx="50" cy="5" r="2" fill="%23f8e0b0"/><circle cx="90" cy="20" r="3" fill="%23d4af37"/><circle cx="130" cy="10" r="2" fill="%23f8e0b0"/><circle cx="170" cy="25" r="3" fill="%23d4af37"/><circle cx="30" cy="40" r="2" fill="%23f8e0b0"/><circle cx="70" cy="35" r="3" fill="%23d4af37"/><circle cx="110" cy="45" r="2" fill="%23f8e0b0"/><circle cx="150" cy="30" r="3" fill="%23d4af37"/><circle cx="190" cy="50" r="2" fill="%23f8e0b0"/></svg>');
+    opacity: 0.7;
+    z-index: 2;
+    animation: confetti-fall 12s infinite linear;
+}
+
+@keyframes confetti-fall {
+    0% { background-position: 0 -100px; }
+    100% { background-position: 0 300px; }
+}
+
+/* Estilo para o botão substituído */
+.gift-given .gift-button {
+    display: none; /* Esconde o botão original */
+}
+
+/* Mensagem de agradecimento */
+.gift-given .gift-info::after {
+    content: "Obrigado pelo presente! ❤️";
+    display: block;
+    width: 90%;
+    padding: 0.8rem;
+    background: linear-gradient(to right, #f8f3ed, #f8e0b0);
+    color: #8c6d46;
+    border: 1px solid #f8d7a4;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1rem;
+    margin-top: 10px;
+    animation: thank-you-pulse 2s infinite;
+}
+
+/* Animação pulsante para a mensagem */
+@keyframes thank-you-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(248, 224, 176, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(248, 224, 176, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(248, 224, 176, 0); }
+}
+
+/* Degradê dourado na borda */
+.gift-given {
+    background: linear-gradient(white, white), 
+                linear-gradient(to right, #f8e0b0, #d4af37);
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+    border: 2px solid transparent;
+         }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="couple-names">Letícia & Igor</h1>
+        <p class="wedding-date">13 de Setembro de 2025</p>
+        <a href="../index.html" class="back-button">Voltar para o Site</a>
+    </header>
+
+<section class="gift-list">
+        <div class="container">
+            <h2 class="section-title">Lista de Presentes</h2>
+            
+            <div class="instructions">
+                <h4>Como presentear o casal:</h4>
+                <ol>
+                    <li>Escolha um presente da lista abaixo</li>
+                    <li>Clique no botão "Presentear com PIX"</li>
+                    <li>Siga as instruções para copiar o código e pagar</li>
+                </ol>
+            </div>
+            <h2>Pesquisar Presente</h2>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="gift-search" placeholder="Digite para pesquisar um presente...">
+            </div>
+            <div class="gift-container">
+                <div class="gift-item">
+                    <div class="gift-image">
+                        <img src="https://app-cdn.icasei.com.br/NDA2OTQzNjE3MzY1NjkzYjRkNDE1YjVlNWU3NjAzOTAwYjc5YjZkNzRjZmZkMTY5MmE2YmZmNzliYzNjYTI2YmNiOTE2YTliNDE4YTg2YzY3ZDMxNmYyMmVjMDRiZjk4NGQzNjYzM2M2ZWI4YzQyNDc0YjQxYjEzZDc1ZWQ0YTBhZDJmMmYyZmYyMDFkMjJmOTM3YzVhNDMyNTJhNDc4MmRmMzJjZDc5MjFmN2FlNDc3MjdjMTg1YWU4MGMwNmQ1YjRlMDkyNTdjNjhhYTU2MGIzMDNjMjQ3MWViNzg1YjNkMzU5MjhlYjA5MTMwYzE2ZmFkMWMzN2UyM2JiYzYzNjIyNWZiNDNkYjNiMTBiNTUwYzVmYjI3NzY2NDI4M2ZmMWU5MzRiZDJkODMxNGVkMjVlMDlhYjMzMWQzMThkZGQ1YmYxYWJkNTdiOWYyOTRiODgxNGQyNWY4NTU2YjgwMTVhNjcxMTMxZjBjY2JiZjQ0YmIwYjFiZGFkZmExNjJjYTQ3MWNjZmY=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Açucareiro</h3>
+                        <div class="gift-price">R$ 60,52</div>
+                        <button class="gift-button" data-price="60.52" data-item-id="item1">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                        <img src="https://lh3.googleusercontent.com/VL7jAsj6byLnQwoZgK617OJ6ILHF5I7-zYb68SSKQpQzEmKndgGCxQ-uuOSpCHBzGYgk3aNsJZyL1k3ZbWT6gIOXF1yTSGNeo32XibLrEhpS=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Almofadas para dar aquela acolhida no sofá</h3>
+                        <div class="gift-price">R$ 70,92</div>
+                        <button class="gift-button" data-price="70.92" data-item-id="item2">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                        <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350288/1751408402/site-de-casamento-icasei-lp-0000000112281684.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Aparelho de jantar</h3>
+                        <div class="gift-price">R$ 70,92</div>
+                        <button class="gift-button" data-price="70.92" data-item-id="item3">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                        <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346080/1751237374/site-de-casamento-icasei-lp-0000000112231270.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Batedeira</h3>
+                        <div class="gift-price">R$ 156,24</div>
+                        <button class="gift-button" data-price="156.24" data-item-id="item4">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                        <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350243/1751406910/site-de-casamento-icasei-lp-0000000000000000.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Box Queen</h3>
+                        <div class="gift-price">R$ 539,14</div>
+                        <button class="gift-button" data-price="539.14" data-item-id="item5">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/EkcwUlA4XpKputT-Yw21CDtxbcMTywC_6C8pn0PraF6E-AxTK155riULaPEvM8osesm71S5W-bohH9GPiFJBOOmezr3qOBUPb58Mfna8yvp79A=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Conjunto de assadeiras de vidro Marinex 4 unidades</h3>
+                        <div class="gift-price">R$ 144,68</div>
+                        <button class="gift-button" data-price="144.68" data-item-id="item6">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346061/1751236976/site-de-casamento-icasei-tp-0000000112231133.jpg">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Conjunto de travesseiros</h3>
+                        <div class="gift-price">R$ 138,55</div>
+                        <button class="gift-button" data-price="138.55" data-item-id="item7">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/ymUwfTaJgqYcZk8BIXapyo3ql5B8-Ne5ClfupGfV6KcaB90uq17uSCyYesWVTlYGyIEF7zTr5D5SkAFcL37K_ca3f-Qw3C-JE4uKkD_cEtO_=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Conjunto para sobremesa de vidro</h3>
+                        <div class="gift-price">R$ 59,48</div>
+                        <button class="gift-button" data-price="59.48" data-item-id="item8">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/otm9HOcR3AKmOZs6owXzI0MNJdok5YVa0LDS-9LNpoGPXVyqqf_KV5CqRei3xLKXNeAEnHH0S1hhBCjy38DV0iBBKvj2rZNFc0W-vPIJuuw=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Cortina</h3>
+                        <div class="gift-price">R$ 122,95</div>
+                        <button class="gift-button" data-price="122.95" data-item-id="item9">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/H2PUh4HGy_wJkUMYPQOJMkcfzPrqcgXcelPVsfP9CK0zpp3Sh_YVQaUQW349U8x2PSz8Qom096yt1LzGaaaOp7ckAaw829Jt5FZcnLw1fqgm=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Fritadeira Air Fryer</h3>
+                        <div class="gift-price">R$ 315,33</div>
+                        <button class="gift-button" data-price="315.33" data-item-id="item10">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350280/1751408112/site-de-casamento-icasei-lp-0000000112281877.jpg">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Garrafa térmica</h3>
+                        <div class="gift-price">R$ 39,71</div>
+                        <button class="gift-button" data-price="39.71" data-item-id="item11">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/stzqGKWGnbk9qdd3YxdRvTDIXRzwpwKcfRnGguknP2XiHXJ4Y0TKfm3EbL_FP4kLQAwhOxFTn5xlQfbhGFnoNVdISLu68ACFZpRr2LqZZV6J=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Geladeira Refrigeradora</h3>
+                        <div class="gift-price">R$ 1.995,80</div>
+                        <button class="gift-button" data-price="1995.80" data-item-id="item12">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/sO2TpW6k7Y5EH8ujjYjJeFFeiDCGnuMSVl2UALxyaG4W02rSCp6ewyBMd1adIkxLo5rUdQ7KfBrDbGldVJSno1thGrqcAGw6JELQQng7_CI=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Jarra de vidro com tampa</h3>
+                        <div class="gift-price">R$ 46,99</div>
+                        <button class="gift-button" data-price="46.99" data-item-id="item13">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/SEDxWurhLIQqig-mTnrtnLT9ezFSG2WD9GesdGJDYHh9228wEzw3s0AvFAgOquISLKdYQCqP2vpb2DuyLFU3Nvb5dEaxGLY7gQVfpddgpU8B=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Jogo de banho - 5 peças</h3>
+                        <div class="gift-price">R$ 185,38</div>
+                        <button class="gift-button" data-price="185.38" data-item-id="item14">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350268/1751407798/site-de-casamento-icasei-lp-0000000112281883.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Jogo de canecas</h3>
+                        <div class="gift-price">R$ 60,52</div>
+                        <button class="gift-button" data-price="60.52" data-item-id="item15">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346146/1751238586/site-de-casamento-icasei-lp-0000000112231134.jpg">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Jogo de lençol</h3>
+                        <div class="gift-price">R$ 80,00</div>
+                        <button class="gift-button" data-price="80" data-item-id="item16">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://www.havan.com.br/media/catalog/product/cache/73a52df140c4d19dbec2b6c485ea6a50/j/o/jogo-de-panela-tramontina-california-7-pecas_747382.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Jogo de panela</h3>
+                        <div class="gift-price">R$ 200,00</div>
+                        <button class="gift-button" data-price="200" data-item-id="item41">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/gcxEhRc8zzdFPD4jlE_7AFTO3FFp9fLRpJ7ZKQC5b6Izs2kqh5_aqJqwYb2Jle8HEQoWv1YBmkv5c0GmF2EVi1vadxHipjWqHIt2Mlbd8aLrFQ=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">JOGO TACA VINHO KLAUDIE BOHEMIA 6PCS 230ML</h3>
+                        <div class="gift-price">R$ 70,92</div>
+                        <button class="gift-button" data-price="70.92" data-item-id="item17">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350323/1751409355/site-de-casamento-icasei-lp-0000000000000000.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Kit Pano de Copa</h3>
+                        <div class="gift-price">R$ 50,11</div>
+                        <button class="gift-button" data-price="50.11" data-item-id="item18">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350308/1751409063/site-de-casamento-icasei-lp-0000000000000000.jpg">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Kit Utensilhos</h3>
+                        <div class="gift-price">R$ 50,11</div>
+                        <button class="gift-button" data-price="50.11" data-item-id="item19">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/4JkyIIDdIg2TKk1MvJfsD1VfHwpmC7vphfNW3F8oZEFyiwLOXMrCPZxsEJ8JAY-Mp-LI5ggfY1nxgYgL0_YjILG0BbIGDiMoH7uZOBLKLc4z=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Liquidificador</h3>
+                        <div class="gift-price">R$ 130,23</div>
+                        <button class="gift-button" data-price="130.23" data-item-id="item20">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346131/1751238337/site-de-casamento-icasei-lp-0000000000000000.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Mesa com 4 Cadeiras</h3>
+                        <div class="gift-price">R$ 435,09</div>
+                        <button class="gift-button" data-price="435.09" data-item-id="item21">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346151/1751238690/site-de-casamento-icasei-tp-0000000112231187.jpg">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Mesa de cabeceira</h3>
+                        <div class="gift-price">R$ 122,95</div>
+                        <button class="gift-button" data-price="122.95" data-item-id="item22">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://app-cdn.icasei.com.br/NDA2OTQzNjE3MzY1NjkzYjRkNDE1YjVlNWU3NjAzOTAwYjc5YjZkNzRjZmZkMTY5MmE2YmZmNzliYzNjYTI2YmNiOTE2YTliNDE4YTg2YzY3ZDMxNmYyMmVjMDRiZjk4NGQzNjYzM2M2ZWI4YzQyNDc0YjQxYjEzZDc1ZWQ0YTBhZDJmMmYyZmYyMDFkMjJmOTM3YzVhNDMyNTJhNDc4MmRmMzJjZDc5MjFmN2FlNDc3MjdjMTg1YWU4MGMwNmQ1YjRlMDkyNTFjNjhhYTU2MGIzMDNjMjQ3MWZiMDg1YjRkMzU5MjhlYjA5MTMwYzE2ZmFkMWMzN2UyM2JiYzYzNjIyNWZiNDNkYjNiMTBiNTUwYzVmYWE3NzY2NDI4M2ZmMWU5MzRiZDJkODMxNGVkMjU1MDlhYzMyMWUzMTkwYzg1ZWEzYTVkYjNhOWQyYjQwODU1M2NhNDdjZTVjYmExMzRjNmI1YTZlZDQwNmVmZDc0NzFlZDNjYTU0NmEzMDlkNDAwOWE3YjdkMA=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Mesa de centro</h3>
+                        <div class="gift-price">R$ 185,38</div>
+                        <button class="gift-button" data-price="185.38" data-item-id="item23">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346077/1751237280/site-de-casamento-icasei-lp-0000000112230848.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Microondas</h3>
+                        <div class="gift-price">R$ 331,04</div>
+                        <button class="gift-button" data-price="331.04" data-item-id="item24">Presentear com PIX</button>
+                    </div>
+                </div>
+                <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4350300/1751408835/site-de-casamento-icasei-lp-0000000000000000.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Painel Tv</h3>
+                        <div class="gift-price">R$ 226,99</div>
+                        <button class="gift-button" data-price="226.99" data-item-id="item25">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/x0-MUrZMG_jszn6sRlGVZrXCvJGMa0eRLISU5bjSqQuyxhrmJ7txQfhW5Z4HpMoulk9d0qTzthZjDiMY0CTPly2B7ALebqNxfqOAW5eXhm_DTg=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Porta bolo</h3>
+                        <div class="gift-price">R$ 54,28</div>
+                        <button class="gift-button" data-price="54.28" data-item-id="item26">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/uQXvFa4kXc82RVdVvYhnQnt9_0TYPZJzoTCGzjsmOURWadiEA5eVsgmpUOfzWvmWo7mFX0M7Z9_cFINt84WQcDQmaRh_swHb3xS7LejMsR0=s0">
+                    </div>
+                    <div class="gift-info">
+                        <div class="gift-tag">Mais Popular</div>
+                        <h3 class="gift-name">Potes herméticos</h3>
+                        <div class="gift-price">R$ 60,52</div>
+                        <button class="gift-button" data-price="60.52" data-item-id="item27">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/3cVX6lqGRblxliPAXNcaaVheClRtz81BoqyyF_0z7LgGn1BkhX276wjoHhjCULWUhldAnw_v-9Ya1k-sSyEpLCVsf62uz834Dph5spLrAOSc=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Saladeira</h3>
+                        <div class="gift-price">R$ 46,99</div>
+                        <button class="gift-button" data-price="46.99" data-item-id="item28">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346104/1751237849/site-de-casamento-icasei-lp-0000000112232509.webp">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Sofá Retrátil</h3>
+                        <div class="gift-price">R$ 1.506,78</div>
+                        <button class="gift-button" data-price="1506.78" data-item-id="item29">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://lh3.googleusercontent.com/WNQgIvEytw2U5L-X3wMbX_j1M9v2JZ8AwM1y5IcbA3pn4s-d9lxboAQCY1HThxySFHVmL-KsfbjMukgsKOPjbTVCUI4PnTzbF65tbMI1ETQB=s0">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Tábua de corte</h3>
+                        <div class="gift-price">R$ 60,52</div>
+                        <button class="gift-button" data-price="60.52" data-item-id="item30">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346098/1751237718/site-de-casamento-icasei-lp-0000000112231357.avif">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Tapete de sala</h3>
+                        <div class="gift-price">R$ 208,27</div>
+                        <button class="gift-button" data-price="208.27" data-item-id="item31">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://storage.googleapis.com/icasei-products-prod/couple/1427575/images/4346135/1751238445/site-de-casamento-icasei-lp-0000000112231135.png">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Toalha de mesa</h3>
+                        <div class="gift-price">R$ 50,11</div>
+                        <button class="gift-button" data-price="50.11" data-item-id="item32">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <div class="gift-tag">Mais Popular</div>
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 20</div>
+                        <button class="gift-button" data-price="20" data-item-id="item33">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 40</div>
+                        <button class="gift-button" data-price="40" data-item-id="item34">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 60</div>
+                        <button class="gift-button" data-price="60" data-item-id="item35">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 80</div>
+                        <button class="gift-button" data-price="80" data-item-id="item36">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <div class="gift-tag">Mais Popular</div>
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 100</div>
+                        <button class="gift-button" data-price="100" data-item-id="item37">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 120</div>
+                        <button class="gift-button" data-price="120" data-item-id="item38">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 140</div>
+                        <button class="gift-button" data-price="140" data-item-id="item39">Presentear com PIX</button>
+                    </div>
+                </div>
+               <div class="gift-item gift-given">
+                    <div class="gift-image">
+                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu3fS99OMrW0DhhCiPJCGjA-qv1Yi8XBe0yw&s">
+                    </div>
+                    <div class="gift-info">
+                        <div class="gift-tag">Mais Popular</div>
+                        <h3 class="gift-name">Vale-presente</h3>
+                        <div class="gift-price">R$ 160</div>
+                        <button class="gift-button" data-price="160" data-item-id="item40">Presentear com PIX</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="pix-modal-container" id="pixModal">
+        <div class="pix-modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h3 class="modal-title">Pagamento via PIX</h3>
+            
+            <p class="modal-instruction">O código PIX foi copiado para sua área de transferência.</p>
+            <p class="modal-instruction">Agora, abra o seu aplicativo de banco e utilize a opção <b>"PIX Copia e Cola"</b> para efetuar o pagamento de <strong id="giftAmount">R$ 0,00</strong>.</p>
+            
+            <div class="copy-info">
+                <i class="fas fa-check-circle"></i>
+                <span>Código copiado!</span>
+            </div>
+
+            <h4 style="margin-top: 2rem; color: var(--secondary);">Encontre seu banco:</h4>
+            <div class="bank-options">
+                <a href="#" class="bank-button" data-bank="itau">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCVN47Gkh4j0CIv9hViguUm2GxbFzHrPmsbg&s" alt="Itaú">
+                    <span>Itaú</span>
+                </a>
+                <a href="#" class="bank-button" data-bank="nubank">
+                    <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-2.png" alt="Nubank">
+                    <span>Nubank</span>
+                </a>
+                <a href="#" class="bank-button" data-bank="bradesco">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK2mM4mOcVKmmV6TKAYvvo6_fikW64JYBoOg&s" alt="Bradesco">
+                    <span>Bradesco</span>
+                </a>
+                <a href="#" class="bank-button" data-bank="bancodobrasil">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeisONKtZWeQQAQwZcOXz-nUWnSPQ6MGUYHg&s" alt="Banco do Brasil">
+                    <span>Banco do Brasil</span>
+                </a>
+            </div>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
+                * Se o aplicativo do seu banco não estiver listado, abra-o manualmente e procure pela função "PIX Copia e Cola".
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Obrigado por fazer parte da nossa história!</p>
+            <p class="copyright">© 2025 Letícia & Igor. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+<script>
+    // Objeto com os payloads PIX pré-gerados para cada item
+    const pixPayloadsById = {
+        'item1': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540560.525802BR5901N6001C62140510Acucareiro63048FB6',
+        'item2': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540570.925802BR5901N6001C62210517AlmofadasAcolhida630461C7',
+        'item3': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540570.925802BR5901N6001C62200516Aparelhodejantar6304AC64',
+        'item4': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406156.245802BR5901N6001C62130509Batedeira6304A620',
+        'item5': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406539.145802BR5901N6001C62120508BoxQueen6304A377',
+        'item6': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406144.685802BR5901N6001C62220518Conjuntoassadeiras630421CE',
+        'item7': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406138.555802BR5901N6001C62230519Conjuntotravesseiro6304F445',
+        'item8': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540559.485802BR5901N6001C62210517Conjuntosobremesa63040F80',
+        'item9': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406122.955802BR5901N6001C62110507Cortina6304EC14',
+        'item10': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406315.335802BR5901N6001C62220518FritadeiraAirFryer6304FF4A',
+        'item11': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540539.715802BR5901N6001C62180514Garrafatermica6304F0A7',
+        'item12': '00020126330014BR.GOV.BCB.PIX01115195094985052040000530398654071995.805802BR5901N6001C62230519GeladeiraRefrigerad6304AC0A',
+        'item13': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540546.995802BR5901N6001C62180514Jarravidrotapa630438FF',
+        'item14': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406185.385802BR5901N6001C62150511Jogodebanho6304378E',
+        'item15': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540560.525802BR5901N6001C62170513Jogodecanecas6304015F',
+        'item16': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540580.005802BR5901N6001C62160512Jogodelencol6304BDA5',
+        'item17': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540570.925802BR5901N6001C62170513JOGOTACAVINHO6304337D',
+        'item18': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540550.115802BR5901N6001C62170513KitPanodeCopa63046945',
+        'item19': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540550.115802BR5901N6001C62170513KitUtensilhos63046649',
+        'item20': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406130.285802BR5901N6001C62180514Liquidificador6304A8D3',
+        'item21': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406435.095802BR5901N6001C62200516Mesacom4Cadeiras63046ED0',
+        'item22': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406122.955802BR5901N6001C62190515Mesadecabeceira6304675F',
+        'item23': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406185.385802BR5901N6001C62160512Mesadecentro63040AFC',
+        'item24': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406331.045802BR5901N6001C62140510Microondas630448B6',
+        'item25': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406226.995802BR5901N6001C62120508PainelTv6304DBF7',
+        'item26': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540554.285802BR5901N6001C62130509Portabolo63045BE0',
+        'item27': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540560.525802BR5901N6001C62190515Poteshermeticos6304E048',
+        'item28': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540546.995802BR5901N6001C62130509Saladeira63049D2A',
+        'item29': '00020126330014BR.GOV.BCB.PIX01115195094985052040000530398654071506.785802BR5901N6001C62160512SofaRetratil6304AE6B',
+        'item30': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540560.525802BR5901N6001C62160512Tabuadecorte63042AE5',
+        'item31': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406208.275802BR5901N6001C62160512Tapetedesala6304ECDC',
+        'item32': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540550.115802BR5901N6001C62160512Toalhademesa6304D44F',
+        'item33': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540520.005802BR5901N6001C62160512Valepresente630447B8',
+        'item34': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540540.005802BR5901N6001C62160512Valepresente63049F30',
+        'item35': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540560.005802BR5901N6001C62160512Valepresente63042757',
+        'item36': '00020126330014BR.GOV.BCB.PIX011151950949850520400005303986540580.005802BR5901N6001C62160512Valepresente63043E01',
+        'item37': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406100.005802BR5901N6001C62160512Valepresente6304B3F1',
+        'item38': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406120.005802BR5901N6001C62160512Valepresente63040B96',
+        'item39': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406140.005802BR5901N6001C62160512Valepresente6304D31E',
+        'item40': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406160.005802BR5901N6001C62160512Valepresente63046B79',
+        'item41': '00020126330014BR.GOV.BCB.PIX0111519509498505204000053039865406200.005802BR5901N6001C62160512Jogodepanela630478C7'
+    };
+
+
+    // Elementos DOM
+    const giftButtons = document.querySelectorAll('.gift-button');
+    const pixModal = document.getElementById('pixModal');
+    const closeModal = document.getElementById('closeModal');
+    const giftAmountElement = document.getElementById('giftAmount');
+
+    // Configurações dos aplicativos bancários
+const bankApps = {
+    itau: {
+        scheme: 'itau',
+        androidPackage: 'com.itau',
+        iosUrl: 'https://apps.apple.com/app/id451457813',
+        androidStore: 'https://play.google.com/store/apps/details?id=com.itau'
+    },
+    nubank: {
+        scheme: 'nubank',
+        androidPackage: 'com.nu.production',
+        iosUrl: 'https://apps.apple.com/br/app/nubank/id852230713',
+        androidStore: 'https://play.google.com/store/apps/details?id=com.nu.production'
+    },
+    bradesco: {
+        scheme: 'bradesco',
+        androidPackage: 'com.bradesco',
+        iosUrl: 'https://apps.apple.com/br/app/banco-bradesco/id336954985',
+        androidStore: 'https://play.google.com/store/apps/details?id=com.bradesco'
+    },
+    bancodobrasil: {
+        scheme: 'bb',
+        androidPackage: 'br.com.bb.android',
+        iosUrl: 'https://apps.apple.com/br/app/bb-banco-do-brasil/id330984271',
+        androidStore: 'https://play.google.com/store/apps/details?id=br.com.bb.android'
+    }
+};
+
+// Função para abrir aplicativos bancários com fallback
+function openBankApp(bankKey) {
+    const bank = bankApps[bankKey];
+    if (!bank) return;
+
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+        // Usa intent:// para Android
+        window.location.href = `intent://#Intent;scheme=${bank.scheme};package=${bank.androidPackage};end`;
+        setTimeout(() => {
+            if (!document.hidden) {
+                window.location.href = bank.androidStore;
+            }
+        }, 800);
+    } else if (isIOS) {
+        window.location.href = `${bank.scheme}://`;
+        setTimeout(() => {
+            if (!document.hidden) {
+                window.location.href = bank.iosUrl;
+            }
+        }, 1200);
+    } else {
+        alert('Recurso disponível apenas no celular.');
+    }
+}
+
+// Adiciona o evento nos botões dos bancos
+document.querySelectorAll('.bank-button').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const bankKey = this.getAttribute('data-bank');
+        openBankApp(bankKey);
+    });
+});
+    // Função para copiar texto para área de transferência
+    function copyTextToClipboard(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text)
+                .catch(err => console.error('Erro ao copiar: ', err));
+        } else {
+            // Fallback para navegadores antigos
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Fallback copy error: ', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    }
+
+    // Event listeners para botões de presente
+    giftButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const itemId = button.getAttribute('data-item-id');
+            const price = button.getAttribute('data-price');
+            const pixPayload = pixPayloadsById[itemId];
+            
+            if (pixPayload) {
+                // Formata o valor
+                const formattedPrice = parseFloat(price).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                });
+                
+                // Copia o payload PIX
+                copyTextToClipboard(pixPayload);
+                
+                // Atualiza e mostra o modal
+                giftAmountElement.textContent = formattedPrice;
+                pixModal.style.display = 'flex';
+            } else {
+                alert('Item não encontrado! Por favor, tente novamente.');
+            }
+        });
+    });
+
+    // Fechar modal
+    closeModal.addEventListener('click', () => {
+        pixModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === pixModal) {
+            pixModal.style.display = 'none';
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('gift-search');
+    const gifts = document.querySelectorAll('.gift-container .gift-item');
+    
+    searchInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      gifts.forEach(function(item) {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
